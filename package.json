@@ -1,0 +1,23 @@
+{
+  "name": "har2csv",
+  "version": "1.0.0",
+  "description": "A simple CLI tool for converting HAR file logs into CSV file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/google/har2csv"
+  },
+  "keywords": [
+    "har",
+    "csv"
+  ],
+  "author": "Google Inc",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@menadevs/objectron": "^0.1.14",
+    "csv-stringify": "^5.5.0"
+  }
+}
