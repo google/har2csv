@@ -17,11 +17,12 @@
 const fs = require('fs');
 const match = require('@menadevs/objectron');
 const stringify = require('csv-stringify');
+const utils = require('./utils');
 
 
 function evaluateHarEntry(harEntry) {
   const baseEntryPattern = {
-    pageref: /(?<pageRef>.*)/,
+    pageref: /(?<pageRef>page_\d+)/,
     startedDateTime: /(?<startedDateTime>.*)/,
     request: {
       method: /(?<requestMethod>GET|POST)/,
@@ -48,9 +49,8 @@ function evaluateHarEntry(harEntry) {
   return match(harEntry, baseEntryPattern);
 }
 
-const args = process.argv.slice(2);
-const filename = args[0];
-const harFileText = fs.readFileSync(filename);
+const args = utils.extractCommandArgs();
+const harFileText = fs.readFileSync(args.inputPath);
 const harFile = JSON.parse(harFileText);
 
 let flatEntries = [];
@@ -60,6 +60,7 @@ if(harFile.log && harFile.log.entries) {
     const currentEntry = evaluateHarEntry(entry);
 
     const flatEntry = {
+      pageRef: 'undefined',
       ...currentEntry.groups,
       ...currentEntry.matches.timings
     };
@@ -70,12 +71,12 @@ if(harFile.log && harFile.log.entries) {
 
     flatEntries.push(Object.values(flatEntry));
   });
+
+  stringify(flatEntries, function(err, output) {
+    fs.writeFile(args.outputPath, output, function (err) {
+      if (err) return console.log(err);
+    });
+  });
 } else {
   console.error('Invalid HAR file!');
 }
-
-stringify(flatEntries, function(err, output) {
-  fs.writeFile('har-output.csv', output, function (err) {
-    if (err) return console.log(err);
-  });
-});

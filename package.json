@@ -19,5 +19,9 @@
   "dependencies": {
     "@menadevs/objectron": "^0.1.14",
     "csv-stringify": "^5.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
