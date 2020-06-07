@@ -59,17 +59,18 @@ if(harFile.log && harFile.log.entries) {
   harFile.log.entries.forEach((entry, entryIndex) => {
     const currentEntry = evaluateHarEntry(entry);
 
-    const flatEntry = {
-      pageRef: 'undefined',
-      ...currentEntry.groups,
-      ...currentEntry.matches.timings
-    };
+    if(currentEntry.match) {
+      const flatEntry = {
+        ...currentEntry.groups,
+        ...currentEntry.matches.timings
+      };
 
-    if (entryIndex === 0) {
-      flatEntries.push(Object.keys(flatEntry));
+      if (entryIndex === 0) {
+        flatEntries.push(Object.keys(flatEntry));
+      }
+
+      flatEntries.push(Object.values(flatEntry));
     }
-
-    flatEntries.push(Object.values(flatEntry));
   });
 
   stringify(flatEntries, function(err, output) {
