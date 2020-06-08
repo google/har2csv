@@ -1,6 +1,6 @@
 {
   "name": "har2csv",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple CLI tool for converting HAR file logs into CSV file",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@menadevs/objectron": "^0.1.14",
+    "commander": "^5.1.0",
     "csv-stringify": "^5.5.0"
   },
   "devDependencies": {

@@ -18,8 +18,47 @@
 const fs = require('fs');
 const match = require('@menadevs/objectron');
 const stringify = require('csv-stringify');
-const utils = require('./utils');
+const commander = require('commander');
 
+
+commander
+ .arguments('<harInputPath> <harOutputPath>')
+ .action(run)
+ .parse(process.argv);
+
+function run(harInputPath, harOutputPath) {
+  const harFileText = fs.readFileSync(harInputPath);
+  const harFile = JSON.parse(harFileText);
+
+  let flatEntries = [];
+
+  if(harFile.log && harFile.log.entries) {
+    harFile.log.entries.forEach((entry, entryIndex) => {
+      const currentEntry = evaluateHarEntry(entry);
+
+      if(currentEntry.match) {
+        const flatEntry = {
+          ...currentEntry.groups,
+          ...currentEntry.matches.timings
+        };
+
+        if (entryIndex === 0) {
+          flatEntries.push(Object.keys(flatEntry));
+        }
+
+        flatEntries.push(Object.values(flatEntry));
+      }
+    });
+
+    stringify(flatEntries, function(err, output) {
+      fs.writeFile(harOutputPath, output, function (err) {
+        if (err) return console.log(err);
+      });
+    });
+  } else {
+    console.error('Invalid HAR file!');
+  }
+}
 
 function evaluateHarEntry(harEntry) {
   const baseEntryPattern = {
@@ -50,35 +89,3 @@ function evaluateHarEntry(harEntry) {
   return match(harEntry, baseEntryPattern);
 }
 
-const args = utils.extractCommandArgs();
-const harFileText = fs.readFileSync(args.inputPath);
-const harFile = JSON.parse(harFileText);
-
-let flatEntries = [];
-
-if(harFile.log && harFile.log.entries) {
-  harFile.log.entries.forEach((entry, entryIndex) => {
-    const currentEntry = evaluateHarEntry(entry);
-
-    if(currentEntry.match) {
-      const flatEntry = {
-        ...currentEntry.groups,
-        ...currentEntry.matches.timings
-      };
-
-      if (entryIndex === 0) {
-        flatEntries.push(Object.keys(flatEntry));
-      }
-
-      flatEntries.push(Object.values(flatEntry));
-    }
-  });
-
-  stringify(flatEntries, function(err, output) {
-    fs.writeFile(args.outputPath, output, function (err) {
-      if (err) return console.log(err);
-    });
-  });
-} else {
-  console.error('Invalid HAR file!');
-}
