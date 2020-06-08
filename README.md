@@ -6,12 +6,10 @@ This CLI tool provides you with an easy way to convert [HAR file](http://www.sof
 
 ## Usage
 
-**requires node v10.13.x or above**
+**Requires node v10.13.x or above**
 
-- Clone this repository
-- Run `node index.js input/file/path.har output/file/path.csv`
-
-**Note: NPM package coming soon**
+- Install via `npm install har2csv -g`
+- To convert a HAR file `har2csv path/to/input.har path/to/output.csv`
 
 ## License
 

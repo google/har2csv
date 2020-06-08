@@ -1,6 +1,6 @@
 {
   "name": "har2csv",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple CLI tool for converting HAR file logs into CSV file",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,8 @@
   },
   "keywords": [
     "har",
-    "csv"
+    "csv",
+    "convert"
   ],
   "author": "Google Inc",
   "license": "Apache-2.0",
@@ -23,5 +24,8 @@
   "devDependencies": {
     "eslint": "^7.2.0",
     "eslint-config-google": "^0.14.0"
+  },
+  "bin": {
+    "har2csv": "index.js"
   }
 }
