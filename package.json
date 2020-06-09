@@ -1,6 +1,6 @@
 {
   "name": "har2csv",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple CLI tool for converting HAR file logs into CSV file",
   "main": "index.js",
   "scripts": {
