@@ -7,7 +7,7 @@ This CLI tool provides you with an easy way to convert [HAR file](http://www.sof
 ## Usage
 
 
-## Install and run
+### Install and run
 
 **Requires node v10.13.x or above**
 
@@ -21,7 +21,7 @@ npm install har2csv -g
 har2csv path/to/input.har path/to/output.csv
 ```
 
-## Generating a HAR file from a browser session
+### Generating a HAR file from a browser session
 
 Example using Chrome:
 
