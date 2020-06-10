@@ -2,15 +2,33 @@
 
 > Convert HTTP session HAR file logs into CSV format
 
-This CLI tool provides you with an easy way to convert [HAR file](http://www.softwareishard.com/blog/har-12-spec/) HTTP log entries into a flat CSV format to make  it easier to analyze.
+This CLI tool provides you with an easy way to convert [HAR file](http://www.softwareishard.com/blog/har-12-spec/) HTTP log entries into a flat CSV format to make  it easier to analyze. The utility ignores fields that are not essential for analyzing requests/responses such as content and those that might carry private information such as cookies.
 
 ## Usage
 
+
+## Install and run
+
 **Requires node v10.13.x or above**
 
-- Download the HAR file you'd like to extract log entries from
-- Install via `npm install har2csv -g`
-- To convert a HAR file `har2csv path/to/input.har path/to/output.csv`
+```
+# Install
+
+npm install har2csv -g
+
+# Run
+
+har2csv path/to/input.har path/to/output.csv
+```
+
+## Generating a HAR file from a browser session
+
+Example using Chrome:
+
+- Open the Dev Tools panel via Ctrl + Shift + i
+- Click the “Network” menu item on the top menu bar of the panel
+- The HTTP session is recorded by default, navigate to the pages / resources you're inspecting
+- Once ready to export the data, right-click anywhere on the list of items in the Network resource list and select “Save all as HAR with content”
 
 ## Extracted log entry fields
 
@@ -36,6 +54,14 @@ This CLI tool provides you with an easy way to convert [HAR file](http://www.sof
 | timings.wait  | wait |
 | timings.receive  | receive |
 | time  | time |
+
+**Note: Entries that don't match the above fields / paths are not included in the result CSV file**
+
+## WIP 
+
+- Support TSV format
+- Add flag for excluding columns from the result
+- Output stats from the conversion e.g. # of requests, GET vs POST etc...
 
 ## License
 
