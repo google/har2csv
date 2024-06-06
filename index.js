@@ -33,7 +33,7 @@ function run(harInputPath, harOutputPath) {
   let flatEntries = [];
 
   if(harFile.log && harFile.log.entries) {
-    harFile.log.entries.forEach((entry, entryIndex) => {
+    harFile.log.entries.forEach((entry) => {
       const currentEntry = evaluateHarEntry(entry);
 
       if(currentEntry.match) {
@@ -42,7 +42,7 @@ function run(harInputPath, harOutputPath) {
           ...currentEntry.matches.timings
         };
 
-        if (entryIndex === 0) {
+        if (!flatEntries.length) {
           flatEntries.push(Object.keys(flatEntry));
         }
 
